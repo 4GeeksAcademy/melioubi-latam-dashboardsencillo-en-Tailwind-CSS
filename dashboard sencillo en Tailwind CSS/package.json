@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "Dashboard de métricas para influencer — HTML + Tailwind CSS v4",
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
-    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch"
+    "build:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/input.css -o ./dist/output.css --minify",
+    "watch:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/input.css -o ./dist/output.css --watch",
+    "preview": "npm run build:css && npx --yes serve . -l 3000"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
     "tailwindcss": "^4.1.11"
   }
 }
+
