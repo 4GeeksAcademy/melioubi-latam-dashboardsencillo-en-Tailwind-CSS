@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard de métricas para influencer — comisiones, conversiones y engagement multi-plataforma">
+  <title>InfluenceHub — Dashboard de Métricas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-surface-950 font-sans text-surface-100 antialiased">
+
+  <!-- Toggle menú móvil (CSS puro — debe ir antes de los elementos peer) -->
+  <input type="checkbox" id="nav-toggle" class="peer/nav sr-only">
+
+  <!-- Skip link accesibilidad -->
+  <a href="#contenido-principal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white">
+    Ir al contenido principal
+  </a>
+
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-surface-800 bg-surface-900 transition-transform duration-300 peer-checked/nav:translate-x-0 lg:static lg:translate-x-0" aria-label="Navegación lateral">
+      <div class="flex items-center gap-3 border-b border-surface-800 px-5 py-5">
+        <div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 font-bold text-white" aria-hidden="true">IH</div>
+        <div>
+          <p class="text-sm font-semibold text-white">InfluenceHub</p>
+          <p class="text-xs text-surface-200">Panel de métricas</p>
+        </div>
+      </div>
+
+      <nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="Menú principal">
+        <ul class="space-y-1">
+          <li>
+            <a href="#kpis" class="flex items-center gap-3 rounded-lg bg-brand-600/20 px-3 py-2.5 text-sm font-medium text-brand-300">
+              <svg class="size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+              Resumen KPIs
+            </a>
+          </li>
+          <li>
+            <a href="#drivers" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:bg-surface-800 hover:text-white">
+              <svg class="size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+              Drivers
+            </a>
+          </li>
+          <li>
+            <a href="#operativo" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:bg-surface-800 hover:text-white">
+              <svg class="size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0118 18.375M20.625 4.125H3.375m17.25 0c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125M3.375 4.125c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125"/></svg>
+              Detalle operativo
+            </a>
+          </li>
+        </ul>
+
+        <p class="mb-2 mt-6 px-3 text-xs font-semibold uppercase tracking-wider text-surface-200">Plataformas</p>
+        <ul class="space-y-1">
+          <li>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-surface-200 transition-colors hover:bg-surface-800 hover:text-white">
+              <span class="size-2 rounded-full bg-pink-500" aria-hidden="true"></span> Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-surface-200 transition-colors hover:bg-surface-800 hover:text-white">
+              <span class="size-2 rounded-full bg-surface-100" aria-hidden="true"></span> TikTok
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-surface-200 transition-colors hover:bg-surface-800 hover:text-white">
+              <span class="size-2 rounded-full bg-red-500" aria-hidden="true"></span> YouTube
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="border-t border-surface-800 p-4">
+        <div class="flex items-center gap-3">
+          <div class="flex size-9 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white" aria-hidden="true">MC</div>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-medium text-white">María Castillo</p>
+            <p class="truncate text-xs text-surface-200">Influencer · 15% comisión</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Overlay móvil (label cierra el menú al hacer clic) -->
+    <label for="nav-toggle" id="sidebar-overlay" class="fixed inset-0 z-30 hidden cursor-pointer bg-black/60 peer-checked/nav:block lg:hidden" aria-hidden="true"></label>
+
+    <!-- Contenido principal -->
+    <div class="flex min-w-0 flex-1 flex-col">
+
+      <!-- Header -->
+      <header class="sticky top-0 z-20 border-b border-surface-800 bg-surface-950/90 backdrop-blur-sm">
+        <div class="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-3">
+            <label for="nav-toggle" class="cursor-pointer rounded-lg p-2 text-surface-200 transition-colors hover:bg-surface-800 hover:text-white lg:hidden" aria-label="Abrir menú de navegación">
+              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+            </label>
+            <div>
+              <h1 class="text-lg font-semibold text-white sm:text-xl">Dashboard de Métricas</h1>
+              <p id="header-periodo" class="hidden text-sm text-surface-200 sm:block">Consolidado multi-plataforma · Últimos 30 días</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 sm:gap-3">
+            <label for="periodo" class="sr-only">Seleccionar periodo</label>
+            <select id="periodo" class="rounded-lg border border-surface-800 bg-surface-900 px-3 py-2 text-sm text-surface-100 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30" aria-describedby="periodo-ayuda">
+              <option value="30">Últimos 30 días</option>
+              <option value="7">Últimos 7 días</option>
+              <option value="month">Este mes</option>
+              <option value="quarter">Trimestre</option>
+            </select>
+            <button type="button" id="btn-exportar" class="rounded-lg bg-brand-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-500 sm:px-4" aria-label="Exportar reporte en CSV">
+              Exportar reporte
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main id="contenido-principal" class="flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-8">
+
+        <!-- ===================== BLOQUE 1: KPIs ===================== -->
+        <section id="kpis" aria-labelledby="titulo-kpis" class="mb-8 rounded-2xl transition-shadow duration-300 lg:mb-10">
+          <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 id="titulo-kpis" class="text-xl font-bold text-white sm:text-2xl">Indicadores principales</h2>
+              <p class="mt-1 text-sm text-surface-200">Resultados consolidados de todas tus plataformas</p>
+            </div>
+            <p id="fecha-actualizacion" class="text-xs text-surface-200">Actualizado: 13 jun 2026</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+            <!-- KPI: Comisiones -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-emerald-500/15 p-2.5">
+                  <svg class="size-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <span id="kpi-comisiones-delta" class="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
+                  +18,4%
+                </span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Comisiones totales</p>
+              <p id="kpi-comisiones-value" class="mt-1 text-3xl font-bold tracking-tight text-white">€4.280</p>
+              <p id="kpi-comisiones-sub" class="mt-2 text-xs text-surface-200">142 ventas × 15% de comisión</p>
+            </article>
+
+            <!-- KPI: Conversiones -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-brand-500/15 p-2.5">
+                  <svg class="size-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m1.582-5.092l1.415 1.414M12 12.75h.008v.008H12v-.008z"/></svg>
+                </div>
+                <span id="kpi-conversiones-delta" class="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">+6,2%</span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Conversiones totales</p>
+              <p id="kpi-conversiones-value" class="mt-1 text-3xl font-bold tracking-tight text-white">142</p>
+              <p class="mt-2 text-xs text-surface-200">Tasa de conversión: <span id="kpi-conversiones-rate" class="font-medium text-brand-300">2,8%</span> (conv. / alcance)</p>
+            </article>
+
+            <!-- KPI: Engagement -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-amber-500/15 p-2.5">
+                  <svg class="size-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                </div>
+                <span id="kpi-engagement-delta" class="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-xs font-medium text-amber-400">+3,1%</span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Tasa de engagement</p>
+              <p id="kpi-engagement-value" class="mt-1 text-3xl font-bold tracking-tight text-white">5,6%</p>
+              <p id="kpi-engagement-sub" class="mt-2 text-xs text-surface-200">28.400 interacciones · 508.000 impresiones</p>
+            </article>
+
+            <!-- KPI: Ventas / Volumen -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-sky-500/15 p-2.5">
+                  <svg class="size-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+                </div>
+                <span id="kpi-ventas-delta" class="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">+12%</span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Ventas generadas</p>
+              <p id="kpi-ventas-value" class="mt-1 text-3xl font-bold tracking-tight text-white">142</p>
+              <p class="mt-2 text-xs text-surface-200">Precio medio: <span id="kpi-ventas-price" class="font-medium text-white">€86,40</span></p>
+            </article>
+
+            <!-- KPI: CTR -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-violet-500/15 p-2.5">
+                  <svg class="size-5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m1.582-5.092l1.415 1.414M12 12.75h.008v.008H12v-.008z"/></svg>
+                </div>
+                <span id="kpi-ctr-delta" class="inline-flex items-center gap-1 rounded-full bg-red-500/15 px-2.5 py-0.5 text-xs font-medium text-red-400">-0,4%</span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Tasa de clics (CTR)</p>
+              <p id="kpi-ctr-value" class="mt-1 text-3xl font-bold tracking-tight text-white">4,2%</p>
+              <p id="kpi-ctr-sub" class="mt-2 text-xs text-surface-200">21.336 clics en enlaces de afiliado</p>
+            </article>
+
+            <!-- KPI: Coste por resultado -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div class="rounded-xl bg-teal-500/15 p-2.5">
+                  <svg class="size-5 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                </div>
+                <span id="kpi-cpc-delta" class="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">-8%</span>
+              </div>
+              <p class="mt-4 text-sm font-medium text-surface-200">Coste por conversión</p>
+              <p id="kpi-cpc-value" class="mt-1 text-3xl font-bold tracking-tight text-white">€5,40</p>
+              <p class="mt-2 text-xs text-surface-200">Margen neto estimado: <span id="kpi-cpc-margin" class="font-medium text-emerald-400">€3.512</span></p>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ===================== BLOQUE 2: DRIVERS ===================== -->
+        <section id="drivers" aria-labelledby="titulo-drivers" class="mb-8 lg:mb-10">
+          <div class="mb-5">
+            <h2 id="titulo-drivers" class="text-xl font-bold text-white sm:text-2xl">Drivers — Factores que explican el resultado</h2>
+            <p class="mt-1 text-sm text-surface-200">Conversión, plataformas, productos y engagement</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+
+            <!-- Driver 1: Funnel de conversión (Chart CSS) -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 md:col-span-2 xl:col-span-1">
+              <header class="mb-5">
+                <h3 class="font-semibold text-white">Funnel de conversión</h3>
+                <p class="text-xs text-surface-200">Alcance → clics → ventas</p>
+              </header>
+              <div class="space-y-4" role="img" aria-label="Gráfico de barras: funnel de conversión con alcance 508000, clics 21336 y ventas 142">
+                <div>
+                  <div class="mb-1 flex justify-between text-xs">
+                    <span class="text-surface-200">Alcance</span>
+                    <span id="funnel-alcance" class="font-medium text-white">508.000</span>
+                  </div>
+                  <div class="h-3 w-full overflow-hidden rounded-full bg-surface-800">
+                    <div class="h-full w-full rounded-full bg-gradient-to-r from-brand-600 to-brand-400"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mb-1 flex justify-between text-xs">
+                    <span class="text-surface-200">Clics en enlace</span>
+                    <span id="funnel-clics" class="font-medium text-white">21.336 <span class="text-brand-300">(4,2%)</span></span>
+                  </div>
+                  <div class="h-3 w-full overflow-hidden rounded-full bg-surface-800">
+                    <div id="funnel-bar-clics" class="h-full w-[42%] rounded-full bg-gradient-to-r from-violet-600 to-violet-400"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mb-1 flex justify-between text-xs">
+                    <span class="text-surface-200">Ventas / conversiones</span>
+                    <span id="funnel-ventas" class="font-medium text-white">142 <span class="text-emerald-400">(2,8%)</span></span>
+                  </div>
+                  <div class="h-3 w-full overflow-hidden rounded-full bg-surface-800">
+                    <div id="funnel-bar-ventas" class="h-full w-[28%] rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Driver 2: Rendimiento por plataforma -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5">
+              <header class="mb-5">
+                <h3 class="font-semibold text-white">Retorno por plataforma</h3>
+                <p class="text-xs text-surface-200">Ingresos / costes (ROI)</p>
+              </header>
+              <div class="space-y-4" role="img" aria-label="Gráfico de barras horizontales de retorno por plataforma">
+                <div class="flex items-center gap-3">
+                  <span class="w-16 shrink-0 text-xs font-medium text-pink-400">Instagram</span>
+                  <div class="h-6 flex-1 overflow-hidden rounded-lg bg-surface-800">
+                    <div id="plat-ig-bar" class="flex h-full w-[85%] items-center justify-end rounded-lg bg-gradient-to-r from-pink-600 to-pink-400 pr-2">
+                      <span id="plat-ig-revenue" class="text-xs font-semibold text-white">€1.820</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-16 shrink-0 text-xs font-medium text-surface-100">TikTok</span>
+                  <div class="h-6 flex-1 overflow-hidden rounded-lg bg-surface-800">
+                    <div id="plat-tt-bar" class="flex h-full w-[72%] items-center justify-end rounded-lg bg-gradient-to-r from-surface-600 to-surface-400 pr-2">
+                      <span id="plat-tt-revenue" class="text-xs font-semibold text-white">€1.540</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-16 shrink-0 text-xs font-medium text-red-400">YouTube</span>
+                  <div class="h-6 flex-1 overflow-hidden rounded-lg bg-surface-800">
+                    <div id="plat-yt-bar" class="flex h-full w-[48%] items-center justify-end rounded-lg bg-gradient-to-r from-red-600 to-red-400 pr-2">
+                      <span id="plat-yt-revenue" class="text-xs font-semibold text-white">€920</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-4 text-xs text-surface-200">Mejor ROI: <span id="plat-best-roi" class="font-medium text-pink-400">Instagram (4,2×)</span></p>
+            </article>
+
+            <!-- Driver 3: Rendimiento por producto -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5">
+              <header class="mb-5">
+                <h3 class="font-semibold text-white">Comisiones por producto</h3>
+                <p class="text-xs text-surface-200">15% sobre precio de venta</p>
+              </header>
+              <div class="flex items-end justify-around gap-2 pt-2" role="img" aria-label="Gráfico de barras verticales de comisiones por producto">
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-32 w-14 items-end justify-center rounded-t-lg bg-surface-800">
+                    <div id="prod-a-bar" class="h-[55%] w-full rounded-t-lg bg-gradient-to-t from-brand-700 to-brand-400"></div>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs font-medium text-white">Prod. A</p>
+                    <p id="prod-a-amount" class="text-xs text-brand-300">€892</p>
+                  </div>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-32 w-14 items-end justify-center rounded-t-lg bg-surface-800">
+                    <div id="prod-b-bar" class="h-full w-full rounded-t-lg bg-gradient-to-t from-emerald-700 to-emerald-400"></div>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs font-medium text-white">Prod. B</p>
+                    <p id="prod-b-amount" class="text-xs text-emerald-400">€1.620</p>
+                  </div>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-32 w-14 items-end justify-center rounded-t-lg bg-surface-800">
+                    <div id="prod-c-bar" class="h-[72%] w-full rounded-t-lg bg-gradient-to-t from-amber-700 to-amber-400"></div>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs font-medium text-white">Prod. C</p>
+                    <p id="prod-c-amount" class="text-xs text-amber-400">€1.168</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Driver 4: Engagement por plataforma -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5 md:col-span-2">
+              <header class="mb-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h3 class="font-semibold text-white">Engagement por plataforma</h3>
+                  <p class="text-xs text-surface-200">Me gusta, comentarios, compartidos y guardados</p>
+                </div>
+                <span id="eng-avg" class="text-xs text-surface-200">Promedio global: 5,6%</span>
+              </header>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="rounded-xl bg-surface-800/50 p-4">
+                  <div class="flex items-center gap-2">
+                    <span class="size-2.5 rounded-full bg-pink-500" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-white">Instagram</p>
+                  </div>
+                  <p id="eng-ig-rate" class="mt-2 text-2xl font-bold text-pink-400">6,8%</p>
+                  <ul class="mt-3 space-y-1 text-xs text-surface-200">
+                    <li class="flex justify-between"><span>Me gusta</span><span id="eng-ig-likes" class="text-white">12.400</span></li>
+                    <li class="flex justify-between"><span>Comentarios</span><span id="eng-ig-comments" class="text-white">1.820</span></li>
+                    <li class="flex justify-between"><span>Guardados</span><span id="eng-ig-saved" class="text-white">3.240</span></li>
+                  </ul>
+                </div>
+                <div class="rounded-xl bg-surface-800/50 p-4">
+                  <div class="flex items-center gap-2">
+                    <span class="size-2.5 rounded-full bg-surface-100" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-white">TikTok</p>
+                  </div>
+                  <p id="eng-tt-rate" class="mt-2 text-2xl font-bold text-surface-100">5,2%</p>
+                  <ul class="mt-3 space-y-1 text-xs text-surface-200">
+                    <li class="flex justify-between"><span>Me gusta</span><span id="eng-tt-likes" class="text-white">8.600</span></li>
+                    <li class="flex justify-between"><span>Comentarios</span><span id="eng-tt-comments" class="text-white">980</span></li>
+                    <li class="flex justify-between"><span>Compartidos</span><span id="eng-tt-shares" class="text-white">2.140</span></li>
+                  </ul>
+                </div>
+                <div class="rounded-xl bg-surface-800/50 p-4">
+                  <div class="flex items-center gap-2">
+                    <span class="size-2.5 rounded-full bg-red-500" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-white">YouTube</p>
+                  </div>
+                  <p id="eng-yt-rate" class="mt-2 text-2xl font-bold text-red-400">4,1%</p>
+                  <ul class="mt-3 space-y-1 text-xs text-surface-200">
+                    <li class="flex justify-between"><span>Me gusta</span><span id="eng-yt-likes" class="text-white">4.200</span></li>
+                    <li class="flex justify-between"><span>Comentarios</span><span id="eng-yt-comments" class="text-white">640</span></li>
+                    <li class="flex justify-between"><span>Visualizaciones</span><span id="eng-yt-views" class="text-white">86.000</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Driver 5: Actividad de contenido -->
+            <article class="rounded-2xl border border-surface-800 bg-surface-900 p-5">
+              <header class="mb-5">
+                <h3 class="font-semibold text-white">Actividad de contenido</h3>
+                <p class="text-xs text-surface-200">Publicaciones del periodo</p>
+              </header>
+              <dl class="space-y-3">
+                <div class="flex items-center justify-between rounded-lg bg-surface-800/50 px-3 py-2.5">
+                  <dt class="text-sm text-surface-200">Reels / Stories</dt>
+                  <dd id="act-reels" class="text-sm font-semibold text-white">34</dd>
+                </div>
+                <div class="flex items-center justify-between rounded-lg bg-surface-800/50 px-3 py-2.5">
+                  <dt class="text-sm text-surface-200">Videos YouTube</dt>
+                  <dd id="act-youtube" class="text-sm font-semibold text-white">6</dd>
+                </div>
+                <div class="flex items-center justify-between rounded-lg bg-surface-800/50 px-3 py-2.5">
+                  <dt class="text-sm text-surface-200">Posts estáticos</dt>
+                  <dd id="act-posts" class="text-sm font-semibold text-white">18</dd>
+                </div>
+                <div class="flex items-center justify-between rounded-lg bg-surface-800/50 px-3 py-2.5">
+                  <dt class="text-sm text-surface-200">Campañas activas</dt>
+                  <dd id="act-campaigns" class="text-sm font-semibold text-brand-300">5</dd>
+                </div>
+              </dl>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ===================== BLOQUE 3: OPERATIVO ===================== -->
+        <section id="operativo" aria-labelledby="titulo-operativo">
+          <div class="mb-5">
+            <h2 id="titulo-operativo" class="text-xl font-bold text-white sm:text-2xl">Detalle operacional</h2>
+            <p class="mt-1 text-sm text-surface-200">Tablas, alertas y oportunidades de mejora</p>
+          </div>
+
+          <!-- Alertas -->
+          <aside aria-labelledby="titulo-alertas" class="mb-6 rounded-2xl border border-surface-800 bg-surface-900 p-5">
+            <h3 id="titulo-alertas" class="mb-4 flex items-center gap-2 font-semibold text-white">
+              <svg class="size-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+              Alertas y anomalías
+            </h3>
+            <ul id="alerts-list" class="space-y-3">
+          </aside>
+
+          <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
+
+            <!-- Tabla productos -->
+            <article class="overflow-hidden rounded-2xl border border-surface-800 bg-surface-900">
+              <header class="border-b border-surface-800 px-5 py-4">
+                <h3 class="font-semibold text-white">Productos</h3>
+                <p class="text-xs text-surface-200">Precio, comisiones, conversiones y ROI</p>
+              </header>
+              <div class="overflow-x-auto">
+                <table class="w-full min-w-[480px] text-left text-sm">
+                  <thead>
+                    <tr class="border-b border-surface-800 bg-surface-800/40 text-xs uppercase tracking-wider text-surface-200">
+                      <th scope="col" class="px-5 py-3 font-medium">Producto</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Precio</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Comisión</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Conv.</th>
+                      <th scope="col" class="px-5 py-3 font-medium">ROI</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-productos-body" class="divide-y divide-surface-800">
+                </table>
+              </div>
+            </article>
+
+            <!-- Tabla plataformas -->
+            <article class="overflow-hidden rounded-2xl border border-surface-800 bg-surface-900">
+              <header class="border-b border-surface-800 px-5 py-4">
+                <h3 class="font-semibold text-white">Plataformas</h3>
+                <p class="text-xs text-surface-200">Alcance, engagement, conversiones y mejor métrica</p>
+              </header>
+              <div class="overflow-x-auto">
+                <table class="w-full min-w-[480px] text-left text-sm">
+                  <thead>
+                    <tr class="border-b border-surface-800 bg-surface-800/40 text-xs uppercase tracking-wider text-surface-200">
+                      <th scope="col" class="px-5 py-3 font-medium">Plataforma</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Alcance</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Engagement</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Conv.</th>
+                      <th scope="col" class="px-5 py-3 font-medium">Destacado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-plataformas-body" class="divide-y divide-surface-800">
+                </table>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Tabla campañas (ancho completo) -->
+          <article class="mt-6 overflow-hidden rounded-2xl border border-surface-800 bg-surface-900">
+            <header class="flex flex-col gap-3 border-b border-surface-800 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 class="font-semibold text-white">Campañas recientes</h3>
+                <p class="text-xs text-surface-200">Fechas, productos promocionados y rendimiento</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" data-filter-btn data-filter-target="top-productos" class="rounded-lg bg-brand-600/20 px-3 py-1.5 text-xs font-medium text-brand-300 transition-colors">Top productos</button>
+                <button type="button" data-filter-btn data-filter-target="top-plataformas" class="rounded-lg bg-surface-800 px-3 py-1.5 text-xs font-medium text-surface-200 transition-colors hover:bg-surface-700">Top plataformas</button>
+                <button type="button" data-filter-btn data-filter-target="oportunidades" class="rounded-lg bg-surface-800 px-3 py-1.5 text-xs font-medium text-surface-200 transition-colors hover:bg-surface-700">Oportunidades</button>
+              </div>
+            </header>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[640px] text-left text-sm">
+                <thead>
+                  <tr class="border-b border-surface-800 bg-surface-800/40 text-xs uppercase tracking-wider text-surface-200">
+                    <th scope="col" class="px-5 py-3 font-medium">Campaña</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Fechas</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Producto</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Plataforma</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Alcance</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Conv.</th>
+                    <th scope="col" class="px-5 py-3 font-medium">Comisiones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-campanas-body" class="divide-y divide-surface-800">
+              </table>
+            </div>
+          </article>
+
+          <!-- Top listados -->
+          <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <article id="top-productos" class="rounded-2xl border border-surface-800 bg-surface-900 p-5 transition-shadow">
+              <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-surface-200">Top productos</h3>
+              <ol id="top-productos-list" class="space-y-3"></ol>
+            </article>
+            <article id="top-plataformas" class="rounded-2xl border border-surface-800 bg-surface-900 p-5 transition-shadow">
+              <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-surface-200">Top plataformas</h3>
+              <ol id="top-plataformas-list" class="space-y-3"></ol>
+            </article>
+            <article id="oportunidades" class="rounded-2xl border border-surface-800 bg-surface-900 p-5 transition-shadow sm:col-span-2 lg:col-span-1">
+              <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-surface-200">Oportunidades de mejora</h3>
+              <ul class="space-y-3">
+                <li class="flex gap-2 text-sm">
+                  <span class="text-brand-400" aria-hidden="true">→</span>
+                  <span class="text-surface-200">Replicar formato del reel <strong class="text-white">Verano Glow</strong> en TikTok</span>
+                </li>
+                <li class="flex gap-2 text-sm">
+                  <span class="text-brand-400" aria-hidden="true">→</span>
+                  <span class="text-surface-200">Añadir CTA verbal en videos de YouTube (+ conversión estimada 15%)</span>
+                </li>
+                <li class="flex gap-2 text-sm">
+                  <span class="text-brand-400" aria-hidden="true">→</span>
+                  <span class="text-surface-200">Priorizar <strong class="text-white">Producto B</strong> — mayor comisión por venta (€18)</span>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="border-t border-surface-800 px-4 py-4 text-center text-xs text-surface-200 sm:px-6 lg:px-8">
+        <p>InfluenceHub Dashboard · Datos de ejemplo · HTML + Tailwind CSS v4</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="./src/dashboard.js"></script>
+  <!-- Safelist clases toggled por JS -->
+  <div class="hidden ring-2 ring-brand-500/40 ring-brand-500/50" aria-hidden="true"></div>
+</body>
+</html>
