@@ -5,7 +5,8 @@
   "scripts": {
     "build:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/input.css -o ./dist/output.css --watch",
-    "preview": "npm run build:css && npx --yes serve . -l 3000"
+    "preview": "python3 -m http.server 3000",
+    "preview:node": "npx --yes serve . -l 3000"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
